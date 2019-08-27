@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Just Play</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+</head>
+<body>
+
+<div class="container mt-5" id="d">
+    <form>
+        <div class="form-group">
+            <label for="title">Title Of Song</label>
+            <input type="text" class="form-control" id="title" placeholder="Folk Tunes">
+        </div>
+        <div class="form-group">
+            <label for="composer">Composer</label>
+            <input type="text" class="form-control" id="composer" placeholder="Hasan Yaman">
+        </div>
+        <div class="form-group">
+            <label for="meter">Meter</label>
+            <input type="text" class="form-control" id="meter" placeholder="4/4">
+        </div>
+        <div class="form-group">
+            <label for="key">Key</label>
+            <input type="text" class="form-control" id="key" placeholder="G">
+        </div>
+        <!--<div class="form-group">
+            <label for="notelength">Basic Note Length</label>
+            <input type="text" class="form-control" id="notelength">
+        </div> -->
+        <button type="button" class="btn btn-primary" id="just-play">
+            Just Play
+        </button>
+
+    </form>
+</div>
+
+<div class="container mt-5 text-center">
+    <div class="spinner-border invisible" role="status" id="loaderDiv">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="invisible" id="audioDiv">
+        <audio controls class="w-75" id="audio"></audio>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let audio = $("#audio");
+        let audioDiv = $("#audioDiv");
+        let loaderDiv = $('#loaderDiv');
+        let button = $('#just-play');
+        button.click(function () {
+            // Disable button
+            button.prop("disabled", true);
+            // Show loader
+            loaderDiv.removeClass("invisible");
+            audioDiv.addClass("invisible");
+
+            $.ajax({
+                url: "http://0.0.0.0:8080/api/predict",
+                method: "GET",
+                data: {
+                    'id': '1'
+                },
+                success: function (result, status, xhr) {
+                    /*
+                    results: data returned from the server
+                    status: a string describing the status
+                    xhr: jgXHR object
+                    */
+                    console.log("Result: " + result);
+                    //audioDiv.removeClass("invisible");
+                    audio.attr("src", result);
+                    //audio.load();
+                    //audio.play();
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred!");
+                },
+                complete: function (xhr, status) {
+                    // Executed after success and error callbacks are executed.
+
+                    // Enable button
+                    button.prop("disabled", false);
+                    // Hide loader
+                    loaderDiv.addClass("invisible");
+                    audioDiv.removeClass("invisible");
+
+                }
+            });
+
+
+        });
+
+    })
+</script>
+</body>
+</html>

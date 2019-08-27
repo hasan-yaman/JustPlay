@@ -1,0 +1,13 @@
+# Sound Files
+*.wav
+*.abc
+*.mid
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+.idea/
+__pycache__/
+
+# Data files
+*.txt
