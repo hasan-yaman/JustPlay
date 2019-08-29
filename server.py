@@ -24,7 +24,7 @@ counter = 0
 
 # Install packages for converting abc files to midi files and converting midi files to
 # wav files.
-cmd = "apt-get install abcmidi timidity install abcmidi timidity"
+cmd = "sudo apt-get install abcmidi timidity install abcmidi timidity"
 os.system(cmd)
 
 print("Ready!")
