@@ -1,0 +1,6 @@
+# Remove files that are not necessary to run app.
+*.ipynb
+abc2wav
+ParseSongs.py
+README.md
+Song.py
