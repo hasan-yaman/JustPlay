@@ -22,6 +22,11 @@ char2int = load_dict(char2int_path)
 
 counter = 0
 
+# Install packages for converting abc files to midi files and converting midi files to
+# wav files.
+cmd = "apt-get install abcmidi timidity install abcmidi timidity"
+os.system(cmd)
+
 print("Ready!")
 
 
@@ -64,8 +69,6 @@ def predict():
 
     # TODO We don't know whether they are worked correctly or not
     # Convert abc file to midi
-    os.system("pwd")
-
     cmd = "abc2midi " + abc_filename + " -o " + midi_filename
     os.system(cmd)
 
