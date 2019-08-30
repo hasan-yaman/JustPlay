@@ -73,7 +73,7 @@ def predict():
     os.system(cmd)
 
     # Convert midi to wav file
-    cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename + " --config-file .apt/etc/timidity/timidity.cfg"
+    cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename + " --config-file /app/.apt/etc/timidity/timidity.cfg"
     os.system(cmd)
 
     print("Before deletes", os.listdir("static"))
