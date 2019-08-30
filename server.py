@@ -44,7 +44,7 @@ def predict():
     key = request.args.get("key", type=str)
     length = request.args.get("length", type=str)
     prime = request.args.get("prime", default='X', type=str)
-    size = request.args.get("size", default=100, type=int)
+    size = request.args.get("size", default=1000, type=int)
 
     chars = [c for c in prime]
     print("Initialize hidden state")
