@@ -2,3 +2,9 @@
     position: absolute;
     z-index: 2;
 }
+
+#github-logo {
+    max-width: 16px;
+    max-height: 16px;
+    margin-bottom: 6px;
+}
