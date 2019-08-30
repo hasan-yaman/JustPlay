@@ -76,9 +76,13 @@ def predict():
     cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename
     os.system(cmd)
 
+    print("Before deletes", os.listdir("static"))
+
     # Delete abc and midi files
     os.remove(abc_filename)
     os.remove(midi_filename)
+
+    print("After deletes", os.listdir("static"))
 
     # Return path of wav file
     return jsonify(wav_filename)
