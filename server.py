@@ -24,8 +24,8 @@ counter = 0
 
 # Install packages for converting abc files to midi files and converting midi files to
 # wav files.
-#cmd = "sudo apt-get install abcmidi timidity"
-#os.system(cmd)
+# cmd = "sudo apt-get install abcmidi timidity"
+# os.system(cmd)
 
 print("Ready!")
 
@@ -73,7 +73,7 @@ def predict():
     os.system(cmd)
 
     # Convert midi to wav file
-    cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename
+    cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename + " --config-file .apt/etc/timidity/timidity.cfg"
     os.system(cmd)
 
     print("Before deletes", os.listdir("static"))
