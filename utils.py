@@ -9,6 +9,15 @@ def load_dict(path):
     return d
 
 
+def create_tune_header(fields_keys, field_values):
+    tune_header = ""
+    for k, v in zip(fields_keys, field_values):
+        if v is not None:
+            tune_header += k + ":" + v + "\n"
+    # Remove last new line character
+    return tune_header[:-1]
+
+
 def delete_old_sound_files(wav_files_list):
     # Find modification date of .wav files and sort them using the modification date
     wav_files = dict()

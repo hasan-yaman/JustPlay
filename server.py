@@ -7,7 +7,7 @@ from torch.nn import functional as F
 
 from model import CharRNN
 from settings import *
-from utils import load_dict
+from utils import load_dict, create_tune_header
 
 app = Flask(__name__)
 
@@ -32,14 +32,19 @@ def generate_song():
 
 @app.route("/api/predict", methods=["GET"])
 def predict():
-    title = request.args.get("title", type=str)
-    composer = request.args.get("composer", type=str)
+    global counter
+    # Let's restrict reference number since I don't output of model with large numbers
+    reference_number = str(counter % 300)
     meter = request.args.get("meter", type=str)
     key = request.args.get("key", type=str)
-    length = request.args.get("length", type=str)
-    prime = request.args.get("prime", default='X', type=str)
-    size = request.args.get("size", default=1000, type=int)
+    tempo = request.args.get("tempo", type=str)
+    rhythm = request.args.get("rhythm", type=str)
+    note_length = request.args.get("note_length", type=str)
 
+    prime = create_tune_header(fields_keys=["X", "M", "K", "Q", "R", "L"],
+                               field_values=[reference_number, meter, key, tempo, rhythm, note_length])
+    size = request.args.get("size", default=1000, type=int)
+    print("Prime", prime)
     chars = [c for c in prime]
     print("Initialize hidden state")
     # Initialize hidden state
@@ -54,7 +59,6 @@ def predict():
 
     generated_song = "".join(chars)
 
-    global counter
     abc_filename = "static/tmp" + str(counter % 20) + ".abc"
     midi_filename = "static/tmp" + str(counter % 20) + ".mid"
     wav_filename = "static/tmp" + str(counter % 20) + ".wav"
@@ -73,7 +77,9 @@ def predict():
 
     print("Convert to wav file")
     # Convert midi to wav file
-    cmd = "timidity --config-file .apt/etc/timidity/timidity.cfg " + midi_filename + " -Ow -o" + wav_filename
+    #cmd = "timidity --config-file .apt/etc/timidity/timidity.cfg " + midi_filename + " -Ow -o" + wav_filename
+    cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename
+
     os.system(cmd)
 
     print("Before deletes", os.listdir("static"))
