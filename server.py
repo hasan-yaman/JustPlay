@@ -22,8 +22,6 @@ char2int = load_dict(char2int_path)
 
 counter = 0
 
-cmd = "timidity --config-file /app/.apt/etc/timidity/timidity.cfg"
-os.system(cmd)
 
 # Install packages for converting abc files to midi files and converting midi files to
 # wav files.
@@ -76,7 +74,7 @@ def predict():
     os.system(cmd)
 
     # Convert midi to wav file
-    cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename
+    cmd = "timidity --config-file /app/.apt/etc/timidity/timidity.cfg " + midi_filename + " -Ow -o" + wav_filename
     os.system(cmd)
 
     print("Before deletes", os.listdir("static"))
