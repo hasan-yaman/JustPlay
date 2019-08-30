@@ -22,12 +22,6 @@ char2int = load_dict(char2int_path)
 
 counter = 0
 
-
-# Install packages for converting abc files to midi files and converting midi files to
-# wav files.
-# cmd = "sudo apt-get install abcmidi timidity"
-# os.system(cmd)
-
 print("Ready!")
 
 
@@ -80,7 +74,6 @@ def predict():
     print("Convert to wav file")
     # Convert midi to wav file
     cmd = "timidity --config-file .apt/etc/timidity/timidity.cfg " + midi_filename + " -Ow -o" + wav_filename
-    #cmd = "timidity " + midi_filename + " -Ow -o " + wav_filename
     os.system(cmd)
 
     print("Before deletes", os.listdir("static"))
@@ -93,7 +86,6 @@ def predict():
 
     # Return path of wav file
     return jsonify(wav_filename)
-    # TODO delete unused files
 
 
 def forward_single_char(char, hidden):
