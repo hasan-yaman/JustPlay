@@ -44,11 +44,13 @@ def predict():
     key = request.args.get("key", type=str)
     length = request.args.get("length", type=str)
     prime = request.args.get("prime", default='X', type=str)
-    size = request.args.get("size", default=1000, type=int)
+    size = request.args.get("size", default=100, type=int)
 
     chars = [c for c in prime]
+    print("Initialize hidden state")
     # Initialize hidden state
     hidden = model.init_hidden(1)
+    print("Generate songs")
     for c in chars:
         generated_c, hidden = forward_single_char(c, hidden)
 
@@ -64,15 +66,18 @@ def predict():
     wav_filename = "static/tmp" + str(counter % 20) + ".wav"
     counter += 1
 
+    print("Convert to abc file")
     # Save abc format
     with open(abc_filename, "w") as f:
         f.write(generated_song)
 
+    print("Convert to mid file")
     # TODO We don't know whether they are worked correctly or not
     # Convert abc file to midi
     cmd = "abc2midi " + abc_filename + " -o " + midi_filename
     os.system(cmd)
 
+    print("Convert to wav file")
     # Convert midi to wav file
     cmd = "timidity --config-file /app/.apt/etc/timidity/timidity.cfg " + midi_filename + " -Ow -o" + wav_filename
     os.system(cmd)
