@@ -1,4 +1,4 @@
-#loaderDiv{
+#loaderDiv {
     position: absolute;
     z-index: 2;
 }
@@ -7,4 +7,16 @@
     max-width: 16px;
     max-height: 16px;
     margin-bottom: 6px;
+}
+
+form {
+    display: none;
+}
+
+form.is-hidden {
+    height: 0;
+}
+
+#settings:hover {
+    cursor: pointer;
 }

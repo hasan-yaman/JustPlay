@@ -40,7 +40,10 @@
     </div>
 </div>
 
-<div class="container mt-5" id="d">
+<div class="container mt-5">
+    <p class="lead text-primary" id="settings">
+        <u>Configure advanced settings</u>
+    </p>
     <form>
         <div class="form-group">
             <label for="meter">Meter</label>
@@ -99,11 +102,10 @@
 
             </select>
         </div>
-        <button type="button" class="btn btn-primary" id="just-play">
-            Just Play
-        </button>
-
     </form>
+    <button type="button" class="btn btn-primary" id="just-play">
+        Just Play
+    </button>
 </div>
 
 <div class="container mt-5 text-center">
@@ -123,12 +125,21 @@
         let audioDiv = $("#audioDiv");
         let loaderDiv = $('#loaderDiv');
         let button = $('#just-play');
+
         let meter = $('select#meter');
         let key = $("select#key");
         let tempo = $("select#tempo");
         let rhythm = $("select#rhythm");
         let noteLength = $("select#note_length");
         let parameters = {};
+
+        let form = $("form");
+        let settings = $("#settings");
+
+        settings.click(function () {
+
+        });
+
         button.click(function () {
             // Disable button
             button.prop("disabled", true);
