@@ -43,7 +43,7 @@ def predict():
     meter = request.args.get("meter", type=str)
     key = request.args.get("key", type=str)
     length = request.args.get("length", type=str)
-    prime = request.args.get("prime", default='X:1', type=str)
+    prime = request.args.get("prime", default='X', type=str)
     size = request.args.get("size", default=100, type=int)
 
     chars = [c for c in prime]
