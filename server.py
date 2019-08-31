@@ -10,7 +10,7 @@ from settings import *
 from utils import load_dict, create_tune_header
 
 app = Flask(__name__)
-
+print("Environment:", app.config["ENV"])
 # Create and load model
 model = CharRNN(n_char)
 model.load_state_dict(torch.load(default_model_path, map_location='cpu'))
@@ -77,9 +77,10 @@ def predict():
 
     print("Convert to wav file")
     # Convert midi to wav file
-    cmd = "timidity --config-file .apt/etc/timidity/timidity.cfg " + midi_filename + " -Ow -o" + wav_filename
-    #cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename
-
+    if app.config["ENV"] == "production":
+        cmd = "timidity --config-file .apt/etc/timidity/timidity.cfg " + midi_filename + " -Ow -o" + wav_filename
+    else:
+        cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename
     os.system(cmd)
 
     print("Before deletes", os.listdir("static"))
@@ -120,5 +121,5 @@ def forward_single_char(char, hidden):
 
 
 if __name__ == '__main__':
-    # extra_files = ["static/"]
-    app.run(host="0.0.0.0", debug=True, port=8080)
+    if app.config["ENV"] == "development":
+        app.run(host="0.0.0.0", debug=True, port=8080)
