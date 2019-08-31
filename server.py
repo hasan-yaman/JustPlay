@@ -1,4 +1,5 @@
 import os
+from multiprocessing import Value
 
 import numpy as np
 import torch
@@ -20,7 +21,7 @@ model.eval()
 int2char = load_dict(int2char_path)
 char2int = load_dict(char2int_path)
 
-counter = 0
+counter = Value("i", 0)
 
 print("Ready!")
 
@@ -32,9 +33,11 @@ def generate_song():
 
 @app.route("/api/predict", methods=["GET"])
 def predict():
-    global counter
+    with counter.get_lock():
+        current_counter = counter.value
+        counter.value += 1
     # Let's restrict reference number since I don't output of model with large numbers
-    reference_number = str(counter % 300)
+    reference_number = str(current_counter % 300)
     meter = request.args.get("meter", type=str)
     key = request.args.get("key", type=str)
     tempo = request.args.get("tempo", type=str)
@@ -59,10 +62,9 @@ def predict():
 
     generated_song = "".join(chars)
 
-    abc_filename = "static/tmp" + str(counter % 20) + ".abc"
-    midi_filename = "static/tmp" + str(counter % 20) + ".mid"
-    wav_filename = "static/tmp" + str(counter % 20) + ".wav"
-    counter += 1
+    abc_filename = "static/tmp" + str(current_counter % 20) + ".abc"
+    midi_filename = "static/tmp" + str(current_counter % 20) + ".mid"
+    wav_filename = "static/tmp" + str(current_counter % 20) + ".wav"
 
     print("Convert to abc file")
     # Save abc format
