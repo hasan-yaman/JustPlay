@@ -8,6 +8,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
@@ -51,8 +55,13 @@
         <u>Configure advanced settings</u>
     </p>
     <form>
+        <p class="lead">
+            Click on the names for more information.
+        </p>
         <div class="form-group">
-            <label for="meter">Meter</label>
+            <label for="meter" data-toggle="popover"
+                   data-content="Indicates how many beats will occur in each measure and which subdivision will be counted as the underlying beat.Below are some of the most used."
+                   title="Meter">Meter</label>
             <select id="meter" class="form-control">
                 <option selected></option>
                 <option>2/2</option>
@@ -66,8 +75,11 @@
                 <option>9/8</option>
             </select>
         </div>
+
         <div class="form-group">
-            <label for="key">Key</label>
+            <label for="key" data-toggle="popover"
+                   data-content="A set of notes that corresponds to a certain scale.Below are some of the most used."
+                   title="Key">Key</label>
             <select id="key" class="form-control">
                 <option selected></option>
                 <option>A</option>
@@ -85,7 +97,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="tempo">Tempo</label>
+            <label for="tempo" data-toggle="popover"
+                   data-content="The speed at which a piece of music is played.Below are some of the most used."
+                   title="Tempo">Tempo</label>
             <select id="tempo" class="form-control">
                 <option selected></option>
                 <option>1/4=135</option>
@@ -93,14 +107,18 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="rhythm">Rhythm</label>
+            <label for="rhythm" data-toggle="popover"
+                   data-content="Refer to the pattern in time of a single small group of notes.Below are some of the most used."
+                   title="Rhythm">Rhythm</label>
             <select id="rhythm" class="form-control">
                 <option selected></option>
                 <option>Hornpipe</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="note_length">Unit Note Length</label>
+            <label for="note_length" data-toggle="popover"
+                   data-content="Duration of notes.Below are some of the most used." title="Unit Note Length">Unit Note
+                Length</label>
             <select id="note_length" class="form-control">
                 <option selected></option>
                 <option>1/4</option>
@@ -145,6 +163,7 @@
 
 <script>
     $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
         let audio = $("#audio");
         let audioDiv = $("#audioDiv");
         let loaderDiv = $('#loaderDiv');
