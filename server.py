@@ -23,6 +23,8 @@ char2int = load_dict(char2int_path)
 
 counter = Value("i", 0)
 
+error_message = "We created some tunes, but it seems like we can't create music from these melodies."
+
 print("Ready!")
 
 
@@ -72,10 +74,16 @@ def predict():
         f.write(generated_song)
 
     print("Convert to mid file")
-    # TODO We don't know whether they are worked correctly or not
     # Convert abc file to midi
     cmd = "abc2midi " + abc_filename + " -o " + midi_filename
     os.system(cmd)
+
+    # Check whether midi file is created correctly or not
+    if not os.path.isfile(midi_filename):
+        # Delete abcfile
+        os.remove(abc_filename)
+        # Return error message and 422 Unprocessable Entity
+        return jsonify(error=error_message), 422
 
     print("Convert to wav file")
     # Convert midi to wav file
@@ -85,13 +93,13 @@ def predict():
         cmd = "timidity " + midi_filename + " -Ow -o" + wav_filename
     os.system(cmd)
 
-    print("Before deletes", os.listdir("static"))
-
     # Delete abc and midi files
     os.remove(abc_filename)
     os.remove(midi_filename)
 
-    print("After deletes", os.listdir("static"))
+    # Check whether wav file is created correctly or not
+    if not os.path.isfile(wav_filename):
+        return jsonify(error=error_message), 422
 
     # Return path of wav file
     return jsonify(wav_filename)
