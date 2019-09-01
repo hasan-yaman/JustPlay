@@ -36,6 +36,21 @@ I used Google Colab to train the neural network.
 
 ## Deployment
 I used Flask framework to create the web application. For deployment platform, my choice was Heroku.
+To run locally, first install necessary packages:
+```
+apt-get install abcmidi timidity
+pip install flask
+```
+Set environment variables:
+```
+export FLASK_APP=server.py
+export FLASK_ENV=development
+```
+Then run:
+```
+flask run
+```
+*I only tested on macOS High Sierra.*
 
 ## TODO
 - [ ] Add download option for created musics.
