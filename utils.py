@@ -13,7 +13,10 @@ def create_tune_header(fields_keys, field_values):
     tune_header = ""
     for k, v in zip(fields_keys, field_values):
         if v is not None:
-            tune_header += k + ":" + v + "\n"
+            if k == "X":
+                tune_header += k + ": " + v + "\n"
+            else:
+                tune_header += k + ":" + v + "\n"
     # Remove last new line character
     return tune_header[:-1]
 

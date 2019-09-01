@@ -39,7 +39,7 @@ def predict():
         current_counter = counter.value
         counter.value += 1
     # Let's restrict reference number since I don't output of model with large numbers
-    reference_number = str(current_counter % 300)
+    reference_number = str(current_counter % 20)
     meter = request.args.get("meter", type=str)
     key = request.args.get("key", type=str)
     tempo = request.args.get("tempo", type=str)
