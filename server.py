@@ -23,7 +23,7 @@ char2int = load_dict(char2int_path)
 
 counter = Value("i", 0)
 
-error_message = "We created some tunes, but it seems like we can't create music from these melodies."
+error_message = "We created some tunes, but it seems like we can't create music from these melodies.Please try again!"
 
 print("Ready!")
 
